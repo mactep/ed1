@@ -1,0 +1,31 @@
+10
+Aprovado N1
+1
+5 5 5
+Aprovado N2
+2
+6 6 6
+Aprovado N3
+3
+7 7 7
+Aprovado N4
+4
+8 8 8
+Aprovado N5
+5
+9 9 9
+Aprovado N6
+6
+10 10 10
+Reprovado N1
+7
+1 1 1
+Reprovado N2
+8
+2 2 2
+Reprovado N3
+9
+3 3 3
+Reprovado N4
+10
+4 4 4
