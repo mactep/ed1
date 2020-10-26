@@ -1,17 +1,8 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "matriz.h"
 #include "listaMat.h"
-
-struct cel {
-    Matriz* mat;
-    Cel* prox;
-};
-
-struct lista {
-    Cel* prim;
-    Cel* ult;
-};
 
 Lista* criaLista() {
     Lista* lista = (Lista*) malloc(sizeof(Lista));
@@ -21,7 +12,7 @@ Lista* criaLista() {
     return lista;
 }
 
-void insereLista(Lista* lista, Matriz* mat) {
+void insereElemento(Lista* lista, Matriz* mat) {
     Cel* cel = (Cel*) malloc(sizeof(Cel));
     cel->mat = mat;
     cel->prox = NULL;
@@ -35,32 +26,50 @@ void insereLista(Lista* lista, Matriz* mat) {
     }
 }
 
-Cel* retiraLista(Lista* lista, int pos) {
-    int count = 0;
-    Cel* prev = lista->prim;
+Cel* retiraElemento(Lista* lista, int pos) {
+    Cel* cel = lista->prim;
+    Cel* prev = NULL;
 
-    for (Cel* cel = lista->prim; cel != NULL; cel = cel->prox) {
-        if (count == pos) {
-            prev->prox = cel->prox;
-
-            return cel->prox;
-        }
-
+    // for (Cel* cel = lista->prim; cel != NULL; cel = cel->prox) {
+    for (int i = 0; i < pos; i++) {
         prev = cel;
-        count++;
+        cel = cel->prox;
     }
 
-    return NULL;
+    if (cel == NULL) {
+        return NULL;
+    }
+
+    if (cel == lista->prim && cel == lista->ult) {
+        lista->prim = NULL;
+        lista->ult = NULL;
+    } else if (cel == lista->prim) {
+        lista->prim = cel->prox;
+    } else if (cel == lista->ult) {
+        lista->ult = prev;
+    } else {
+        prev->prox = cel->prox;
+    }
+
+    return cel;
 }
 
 void imprimeLista(Lista* lista) {
     for (Cel* cel = lista->prim; cel != NULL; cel = cel->prox) {
         imprimeMatriz(cel->mat);
+        printf("\n");
     }
 }
 
 void destroiLista(Lista* lista) {
-    free(lista->prim);
-    free(lista->ult);
+    Cel* cel = lista->prim;
+    Cel* aux;
+
+    while (cel != NULL) {
+        aux = cel->prox;
+        free(cel);
+        cel = aux;
+    }
+
     free(lista);
 }

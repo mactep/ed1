@@ -4,13 +4,23 @@
 #include "matriz.h"
 
 typedef struct cel Cel;
+struct cel {
+    Matriz* mat;
+    Cel* prox;
+};
+
 typedef struct lista Lista;
+struct lista {
+    Cel* prim;
+    Cel* ult;
+};
+
 
 Lista* criaLista();
 
-void insereLista(Lista* lista, Matriz* mat);
+void insereElemento(Lista* lista, Matriz* mat);
 
-Cel* retiraLista(Lista* lista, int pos);
+Cel* retiraElemento(Lista* lista, int pos);
 
 void imprimeLista(Lista* lista);
 

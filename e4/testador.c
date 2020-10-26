@@ -19,12 +19,12 @@
 #include "matriz.h"
 
 //definindo constantes para o número de linhas e colunas da matriz
-#define NLINHAS 4
+#define NLINHAS 3
 #define NCOLUNAS 3
 
 int main()
 {
-    printf("Criando matrizes");
+    printf("Criando matrizes\n");
     Matriz* um = inicializaMatriz(NLINHAS, NCOLUNAS);
     for (int i = 0; (i < NLINHAS || i < NCOLUNAS); i++) {
         modificaElemento(um, i, i,1);
@@ -40,51 +40,56 @@ int main()
         modificaElemento(tres, i, i, 3);
     }
 
-    printf("Criado lista");
-    Lista* matrizes = inicializaLista();
+    printf("Criado lista\n");
+    Lista* matrizes = criaLista();
 
-    printf("Inserindo matrizes na lista");
+    printf("Inserindo matrizes na lista\n");
     insereElemento(matrizes, um);
     insereElemento(matrizes, dois);
     insereElemento(matrizes, tres);
 
     imprimeLista(matrizes);
 
-    printf("Criado lista");
-    Lista* transpostas = inicializaLista();
+    printf("Criado lista\n");
+    Lista* transpostas = criaLista();
 
-    printf("Inserindo matrizes na lista");
+    printf("Inserindo matrizes na lista\n");
     insereElemento(transpostas, transposta(um));
     insereElemento(transpostas, transposta(dois));
     insereElemento(transpostas, transposta(tres));
 
     imprimeLista(transpostas);
 
-    printf("removendo matrizes");
-    Cel* cel = (Cel*) malloc(sizeof(Cel));
+    printf("removendo matrizes\n");
+    Cel* cel;
     cel = retiraElemento(matrizes, 0);
     if (cel != NULL) {
         imprimeMatriz(cel->mat);
+        free(cel);
+        printf("\n");
     }
 
     cel = retiraElemento(matrizes, 1);
     if (cel != NULL) {
         imprimeMatriz(cel->mat);
+        free(cel);
+        printf("\n");
     }
 
-    cel = retiraElemento(matrizes, 0);
+    cel = retiraElemento(transpostas, 1);
     if (cel != NULL) {
         imprimeMatriz(cel->mat);
+        free(cel);
+        printf("\n");
     }
 
-    printf("Inserindo matrizes de volta");
+    printf("Inserindo matrizes de volta\n");
     insereElemento(matrizes, um);
-    insereElemento(matrizes, dois);
     insereElemento(matrizes, tres);
 
     imprimeLista(matrizes);
 
-    printf("Destruindo matrizes");
+    printf("Destruindo matrizes\n");
     for (Cel* cel = matrizes->prim; cel != NULL; cel = cel->prox) {
         destroiMatriz(cel->mat);
     }
@@ -93,7 +98,7 @@ int main()
         destroiMatriz(cel->mat);
     }
 
-    printf("Destruindo listas");
+    printf("Destruindo listas\n");
     destroiLista(matrizes);
     destroiLista(transpostas);
 }
