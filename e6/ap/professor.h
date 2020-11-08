@@ -3,7 +3,7 @@
 
 typedef struct professor Professor;
 
-Professor* inicProf(int siape, char* nome, float salario);
+Professor* inicProfessor(int siape, char* nome, float salario);
 
 void imprimeProfessor(Professor* prof);
 
