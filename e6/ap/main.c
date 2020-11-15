@@ -33,7 +33,10 @@ int main()
 
     imprimeLista(churrasco);
 
-    printf("Valor do churrasco: %.2f", valorChurrasco(churrasco));
+    printf("Valor do churrasco: %.2f\n", valorChurrasco(churrasco));
+
+    printf("Destruindo lista\n");
+    destroiLista(churrasco);
 
     printf("Destruindo alunos\n");
     destroiAluno(a1);
@@ -45,7 +48,4 @@ int main()
     printf("Destruindo professores\n");
     destroiProfessor(p1);
     destroiProfessor(p2);
-
-    printf("Destruindo lista\n");
-    destroiLista(churrasco);
 }

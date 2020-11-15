@@ -38,6 +38,6 @@ float getSalario(Professor* prof) {
 }
 
 void destroiProfessor(Professor* prof) {
-    free(prof->nome);
+    // free(prof->nome);
     free(prof);
 }

@@ -38,6 +38,6 @@ float getCR(Aluno* al) {
 }
 
 void destroiAluno(Aluno* al) {
-    free(al->nome);
+    // free(al->nome);
     free(al);
 }
