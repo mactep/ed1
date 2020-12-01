@@ -1,0 +1,100 @@
+\documentclass[
+	12pt,
+	oneside,
+	a4paper,
+	english,
+	french,
+	spanish,
+	brazil,
+	]{abntex2}
+
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{microtype}
+
+\usepackage[brazilian,hyperpageref]{backref}
+\usepackage[alf]{abntex2cite}
+
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+\renewcommand{\backref}{}
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1
+		Nenhuma citação no texto.
+	\or
+		Citado na página #2.
+	\else
+		Citado #1 vezes nas páginas #2.
+	\fi}
+
+\titulo{Primeiro Trabalho Prático}
+\autor{Tulio Brunoro de Souza}
+\local{Vitória ES}
+\data{2020}
+
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatório técnico}, 
+		colorlinks=true,
+    	linkcolor=blue,
+    	citecolor=blue,
+    	filecolor=magenta,
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+
+\setlength{\parindent}{1.3cm}
+\setlength{\parskip}{0.2cm}
+
+\begin{document}
+
+\selectlanguage{brazil}
+\frenchspacing
+
+\imprimircapa
+
+\textual
+
+\chapter{Introdução}
+descrição do problema a ser resolvido e visão geral sobre o funcionamento do
+programa (em termos de módulos - TADs, arquivos, etc.).
+
+O problema consiste em implementar um sistema de construção colaborativa de uma
+enciclopédia, provendo uma interface para que o usuário possa realizar suas
+tarefas.
+
+O sistema da enciclopédia consiste de páginas, editores, colaborações e links.
+Todos esses componentes juntos compõem o sistema do WikiED. Uma página consiste
+de colaborações, feitas por editores, e links.
+
+Lista encadeada de páginas;
+Lista encadeada de colaborações;
+Contribuições consistem de texto, fornecido por arquivo, e editor;
+Inserir elementos ao final da lista;
+
+\chapter{Metodologia}
+descrição da implementação do programa. Devem ser detalhadas as estruturas de
+dados utilizadas (preferencialmente com diagramas ilustrativos), o
+funcionamento das principais funções utilizadas, bem como decisões tomadas
+relativas aos casos e detalhes de especificação que porventura estejam omissos
+no enunciado. Modularize o seu programa usando a técnica de tipos abstratos de
+dados, como discutido em sala de aula.
+
+\chapter{Conclusão}
+comentários gerais sobre o trabalho e as principais dificuldades encontradas em
+sua implementação.
+
+\phantompart
+
+\bibliography{main}
+
+\end{document}
