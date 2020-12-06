@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 #include "cont.h"
 
@@ -11,6 +13,7 @@ struct cont_cel {
 struct cont {
     Editor* editor;
     char* nome_arquivo;
+    int removido;
 };
 
 ContCel* cria_lista_cont() {
@@ -25,7 +28,8 @@ ContCel* cria_lista_cont() {
 Cont* cria_cont(Editor* editor, char* nome_arquivo) {
     Cont* cont = (Cont*) malloc(sizeof(Cont));
     cont->editor = editor;
-    cont->nome_arquivo = nome_arquivo;
+    cont->nome_arquivo = strdup(nome_arquivo);
+    cont->removido = 0;
 
     return cont;
 }
@@ -38,9 +42,9 @@ ContCel* insere_cont_lista(ContCel* lista, Cont* cont) {
     } else {
         ContCel* cel = (ContCel*) malloc(sizeof(ContCel));
         cel->cont = cont;
-        cel->prox = NULL;
-        cel->ant = lista;
-        lista->prox = cel;
+        cel->ant = NULL;
+        cel->prox = lista;
+        lista->ant = cel;
 
         return cel;
     }
@@ -49,4 +53,20 @@ ContCel* insere_cont_lista(ContCel* lista, Cont* cont) {
 void destroi_cont(Cont* cont) {
     destroi_editor(cont->editor);
     free(cont);
+}
+
+Cont* get_cont(ContCel* cel) {
+    return cel->cont;
+}
+
+char* get_cont_arquivo(Cont* cont) {
+    return cont->nome_arquivo;
+}
+
+Editor* get_cont_editor(Cont* cont) {
+    return cont->editor;
+}
+
+ContCel* get_prox_cont(ContCel* cel) {
+    return cel->prox;
 }

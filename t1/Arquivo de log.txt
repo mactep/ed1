@@ -1,29 +1,4 @@
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
-lendo arquivo de entrada
+Erro: pagina Psicologia nao existente
+Comando 'RETIRAEDITOR' não é cobrado
+Ha caminho entre UFES e Fisica
+Não ha caminho entre Fisica e UFES
