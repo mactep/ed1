@@ -13,6 +13,6 @@ int conta_palavras(Hash* hash);
 
 void imprime_hash(Hash* hash);
 
-void destro_hash(Hash* hash);
+void destroi_hash(Hash* hash);
 
 #endif /* ifndef hash_h */

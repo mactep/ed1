@@ -43,6 +43,9 @@ Palavra* busca_palavra(Palavra* palavra, char* string) {
 }
 
 Palavra* insere_palavra_lista(Palavra* lista, Palavra* palavra) {
+    palavra->prox = lista;
+    return palavra;
+    /*
     for (Palavra* pal = palavra; pal != NULL; pal = pal->prox) {
         if (lista->prox == NULL) {
             pal->prox = palavra;
@@ -50,6 +53,7 @@ Palavra* insere_palavra_lista(Palavra* lista, Palavra* palavra) {
     }
 
     return lista;
+    */
 }
 
 int conta_palavra_lista(Palavra* palavra) {
@@ -64,8 +68,7 @@ int conta_palavra_lista(Palavra* palavra) {
 
 void imprime_lista(Palavra* palavra) {
     for (Palavra* pal = palavra; pal != NULL; pal = pal->prox) {
-        printf("String: %s\n", pal->string);
-        printf("Ocorrencias: %d\n", pal->ocorr);
+        printf("String: %s; Ocorrencias: %d\n", pal->string, pal->ocorr);
     }
 }
 

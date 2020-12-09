@@ -58,6 +58,7 @@ void imprime_hash(Hash* hash) {
     for (int i = 0; i < hash->tam; i++) {
         printf("Posição %d: ", i);
         imprime_lista(hash->lista[i]);
+        printf("\n");
     }
 }
 
