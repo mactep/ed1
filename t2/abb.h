@@ -29,4 +29,6 @@ Arvore* get_pai(Arvore* arv);
 
 Arvore* busca_arvore(Arvore* arv, int chave);
 
+int calcula_arvore(Arvore* arv);
+
 #endif

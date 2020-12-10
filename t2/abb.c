@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -26,6 +27,26 @@ void imprime_arvore(Arvore* arv) {
         printf("%s\n", arv->val);
         imprime_arvore(arv->esq);
         imprime_arvore(arv->dir);
+    }
+}
+
+int calcula_arvore(Arvore* arv) {
+    if (arv != NULL) {
+        if (strcmp(arv->val, "+") == 0) {
+            return calcula_arvore(arv->esq) + calcula_arvore(arv->dir);
+        }
+        else if (strcmp(arv->val, "-") == 0) {
+            return calcula_arvore(arv->esq) - calcula_arvore(arv->dir);
+        }
+        else if (strcmp(arv->val, "*") == 0) {
+            return calcula_arvore(arv->esq) * calcula_arvore(arv->dir);
+        }
+        else if (strcmp(arv->val, "/") == 0) {
+            return calcula_arvore(arv->esq) / calcula_arvore(arv->dir);
+        }
+        else if (isdigit(arv->val[0])) {
+            return atoi(arv->val);
+        }
     }
 }
 
