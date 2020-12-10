@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "abb.h"
+#include "arv.h"
 
 void le_numero(FILE* entrada, char* string) {
     char car = fgetc(entrada);
