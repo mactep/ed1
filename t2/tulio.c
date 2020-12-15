@@ -5,92 +5,38 @@
 
 #include "arv.h"
 
-void le_numero(FILE* entrada, char* string) {
-    char car = fgetc(entrada);
-
-    int len = 0;
-    char num[256] = "";
-
-    while (isdigit(car)) {
-        num[len] = car;
-        len++;
-        car = fgetc(entrada);
-    }
-
-    num[len + 1] = '\0';
-    fseek(entrada, -1, SEEK_CUR);
-    strcpy(string, num);
-}
-
-Arvore* parse_entrada(FILE* entrada, Arvore* arv) {
-    char car;
-
-    while (car != '\n') {
-        car = fgetc(entrada);
-        if (car == EOF) {
-            return NULL;
-        }
-
-        if (car == '(') {
-            // printf("cai no caso (\n");
-            Arvore* aux = cria_node_arvore();
-
-            if (arv == NULL) {
-                arv = aux;
-            } else if (get_esq(arv) == NULL) {
-                set_esq(arv, aux);
-            } 
-            else if (get_dir(arv) == NULL) {
-                set_dir(arv, aux);
-            }
-            aux = parse_entrada(entrada, aux);
-        }
-
-        else if (isdigit(car)) {
-            // printf("cai no de numero\n");
-            fseek(entrada, -1, SEEK_CUR);
-            char* num = (char*) malloc(sizeof(char) * 256);
-            le_numero(entrada, num);
-
-            set_val(arv, num);
-        }
-
-        else if (car == '+' || car == '-' || car == '*' || car == '/') {
-            // printf("cai no caso do operador\n");
-            char *val = malloc(sizeof(char)*2);
-            val[0] = car;
-            val[1] = '\0';
-            set_val(arv, val);
-        }
-
-        else if (car == ')') {
-            // printf("cai no caso )\n");
-            return arv;
-        }
-    }
-
-    return arv;
-}
-
 int  main(int argc, char* argv[])
 {
     if (argc == 2) {
+        // pega o arquivo de entrada da linha de comando e  define o de saída como "saida.txt"
         FILE *entrada = fopen(argv[1], "r");
         FILE *saida = fopen("saida.txt", "w");
 
+        // Verifica se os arquivos foram abertos corretamente
         if (entrada == NULL || saida == NULL) {
-          printf("Erro ao ler arquivo de entrada\n");
+          printf("Erro ao ler os arquivos\n");
           exit(1);
         }
 
+        // Lê o arquivo de entrada até a última linha
         while (!feof(entrada)) {
+            // correção de bug no printf
             fflush(stdout);
+            // Cria uma arvore interpretando os dados da linha
             Arvore* arv = parse_entrada(entrada, NULL);
+
+            // Se a árvore for nula, termina a execução do código
             if (!arv) {
                 return 0;
             }
-            fprintf(saida,"%d\n", calcula_arvore(arv));
+            // Imprime o resultado da expressão
+            printf("%f\n", calcula_arvore(arv));
+            fprintf(saida, "%f\n", calcula_arvore(arv));
+
+            // Libera memória
+            destroi_arvore(arv);
         }
+
 
     } else {
         return 1;

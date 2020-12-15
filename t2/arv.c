@@ -9,7 +9,6 @@ struct arv {
     char* val;
     Arvore* esq;
     Arvore* dir;
-    Arvore* pai;
 };
 
 Arvore* cria_node_arvore() {
@@ -17,7 +16,6 @@ Arvore* cria_node_arvore() {
     arv->val = NULL;
     arv->esq = NULL;
     arv->dir = NULL;
-    arv->pai = NULL;
 
     return arv;
 }
@@ -30,7 +28,8 @@ void imprime_arvore(Arvore* arv) {
     }
 }
 
-int calcula_arvore(Arvore* arv) {
+// percorre a arvore hierarquicamente realizando as operações e computando o valor da expressão
+float calcula_arvore(Arvore* arv) {
     if (arv != NULL) {
         if (strcmp(arv->val, "+") == 0) {
             return calcula_arvore(arv->esq) + calcula_arvore(arv->dir);
@@ -44,16 +43,14 @@ int calcula_arvore(Arvore* arv) {
         else if (strcmp(arv->val, "/") == 0) {
             return calcula_arvore(arv->esq) / calcula_arvore(arv->dir);
         }
+        // se for uma raiz, converte pra float e retorna
         else if (isdigit(arv->val[0])) {
-            return atoi(arv->val);
+            return atof(arv->val);
         }
     }
 }
 
-Arvore* insere_arvore(Arvore* arv, char val) {
-    return NULL;
-}
-
+// percorre e libera a memória
 void destroi_arvore(Arvore* arv) {
     if (arv != NULL) {
         destroi_arvore(arv->esq);
@@ -62,80 +59,80 @@ void destroi_arvore(Arvore* arv) {
     }
 }
 
-char* get_val(Arvore* arv) {
-    return arv->val;
-}
+// função para selecionar os dígitos que compõem um número
+void le_numero(FILE* entrada, char* string) {
+    char car = fgetc(entrada);
 
-void set_val(Arvore* arv, char* val) {
-    arv->val = val;
-}
+    int len = 0;
+    char num[256] = "";
 
-void set_esq(Arvore* arv, Arvore* esq) {
-    arv->esq = esq;
-}
-
-void set_dir(Arvore* arv, Arvore* dir) {
-    arv->dir = dir;
-}
-
-Arvore* get_dir(Arvore* arv) {
-    return arv->dir;
-}
-
-Arvore* get_esq(Arvore* arv) {
-    return arv->esq;
-}
-
-Arvore* get_pai(Arvore* arv) {
-    return arv->pai;
-}
-/*
-Arvore* busca_arvore(Arvore* arv, int chave) {
-    if (arv == NULL) {
-        return NULL;
-    } else if (chave < get(arv->al)) {
-        return busca_arvore(arv->esq, chave);
-    } else if (chave > getMatricula(arv->al)) {
-        return busca_arvore(arv->dir, chave);
-    } else {
-        return arv;
+    // enquanto estiver lendo um dígito, adiciona ele ao vetor
+    while (isdigit(car)) {
+        num[len] = car;
+        len++;
+        car = fgetc(entrada);
     }
+
+    // adicionar terminação
+    num[len + 1] = '\0';
+    // retorna pra poder ler o próximo token
+    fseek(entrada, -1, SEEK_CUR);
+    strcpy(string, num);
 }
 
-Arvore* retira_arvore(Arvore* arv, int v) {
-    if (arv == NULL) {
-        return NULL;
-    } else if (getMatricula(arv->al) > v) {
-        arv->esq = retira_arvore(arv->esq, v);
-    } else if (getMatricula(arv->al) < v) {
-        arv->dir = retira_arvore(arv->dir, v);
-    } else {
-        if (arv->esq == NULL && arv->dir == NULL) {
-            free(arv);
-            arv = NULL;
-        } else if (arv->esq == NULL) {
-            Arvore* t = arv;
-            arv = arv->dir;
-            free(t);
-        } else if (arv->dir == NULL) {
-            Arvore* t = arv;
-            arv = arv->esq;
-            free(t);
-        } else {
-            Arvore* f = arv->esq;
-            while (f->dir != NULL) {
-                f = f->dir;
+Arvore* parse_entrada(FILE* entrada, Arvore* arv) {
+    char car;
+
+    // Lê, caractere a caractere, até o fim da linha
+    while (car != '\n' && car != '\r') {
+        car = fgetc(entrada);
+
+        // retorna se estiver lendo no fim do arquivo
+        if (car == EOF) {
+            return NULL;
+        }
+
+        // Cria nó se abrir parenteses
+        if (car == '(') {
+            // Cria nó auxiliar
+            Arvore* aux = cria_node_arvore();
+
+            // se o nó pai for nulo, atribui o auxiliar
+            if (arv == NULL) {
+                arv = aux;
+            // senão, atribui pra um dos lados
+            } else if (arv->esq == NULL) {
+                arv->esq = aux;
+            } 
+            else if (arv->dir == NULL) {
+                arv->dir = aux;
             }
+            aux = parse_entrada(entrada, aux);
+        }
 
-            Aluno* t = arv->al;
-            arv->al = f->al;
-            f->al = t;
+        // verifica se o caractere lido é um dígito
+        else if (isdigit(car)) {
+            // retorna uma posição pra poder ler o número por completo
+            fseek(entrada, -1, SEEK_CUR);
+            char* num = (char*) malloc(sizeof(char) * 256);
+            le_numero(entrada, num);
 
-            arv->esq = retira_arvore(arv->esq, v);
+            arv->val = num;
+        }
+
+        // verifica se o caractere lido é uma operação e atribui valor do nó
+        else if (car == '+' || car == '-' || car == '*' || car == '/') {
+            char *val = malloc(sizeof(char)*2);
+            val[0] = car;
+            val[1] = '\0';
+            arv->val = val;
+        }
+
+        // retornar ao fechar os parenteses
+        else if (car == ')') {
+            return arv;
         }
     }
 
     return arv;
 }
-*/
-
