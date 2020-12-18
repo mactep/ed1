@@ -55,6 +55,7 @@ void destroi_arvore(Arvore* arv) {
     if (arv != NULL) {
         destroi_arvore(arv->esq);
         destroi_arvore(arv->dir);
+        free(arv->val);
         free(arv);
     }
 }
@@ -117,7 +118,8 @@ Arvore* parse_entrada(FILE* entrada, Arvore* arv) {
             char* num = (char*) malloc(sizeof(char) * 256);
             le_numero(entrada, num);
 
-            arv->val = num;
+            arv->val = strdup(num);
+            free(num);
         }
 
         // verifica se o caractere lido é uma operação e atribui valor do nó
@@ -125,7 +127,8 @@ Arvore* parse_entrada(FILE* entrada, Arvore* arv) {
             char *val = malloc(sizeof(char)*2);
             val[0] = car;
             val[1] = '\0';
-            arv->val = val;
+            arv->val = strdup(val);
+            free(val);
         }
 
         // retornar ao fechar os parenteses

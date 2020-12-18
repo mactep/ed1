@@ -27,7 +27,7 @@ int  main(int argc, char* argv[])
 
             // Se a árvore for nula, termina a execução do código
             if (!arv) {
-                return 0;
+                break;
             }
             // Imprime o resultado da expressão
             printf("%f\n", calcula_arvore(arv));
@@ -37,6 +37,8 @@ int  main(int argc, char* argv[])
             destroi_arvore(arv);
         }
 
+        fclose(entrada);
+        fclose(saida);
 
     } else {
         return 1;
